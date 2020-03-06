@@ -28,13 +28,15 @@ import 'custom_log_interceptor.dart';
 
 class NetUtils {
   static Dio _dio;
-  static final String baseUrl = 'http://118.24.63.15';
+//  static final String baseUrl = 'http://118.24.63.15';
+  static final String baseUrl = 'http://musiclake.leanapp.cn';
 
   static void init() async {
     Directory tempDir = await getTemporaryDirectory();
     String tempPath = tempDir.path;
     CookieJar cj = PersistCookieJar(dir: tempPath);
-    _dio = Dio(BaseOptions(baseUrl: '$baseUrl:1020', followRedirects: false))
+//    _dio = Dio(BaseOptions(baseUrl: '$baseUrl:1020', followRedirects: false))
+    _dio = Dio(BaseOptions(baseUrl: '$baseUrl', followRedirects: false))
       ..interceptors.add(CookieManager(cj))
       ..interceptors
           .add(CustomLogInterceptor(responseBody: true, requestBody: true));
@@ -82,6 +84,7 @@ class NetUtils {
     });
     return User.fromJson(response.data);
   }
+
   /// 手机号&验证码登录
   static Future<User> verifyPhoneCode(
       BuildContext context, String phone, String captcha) async {
